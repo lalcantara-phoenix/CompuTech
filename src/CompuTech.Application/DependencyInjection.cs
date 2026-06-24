@@ -1,5 +1,7 @@
 using System.Reflection;
 using CompuTech.Application.Common.Behaviors;
+using CompuTech.Application.Common.Interfaces;
+using CompuTech.Application.MaintenanceSchedules.Services;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +18,8 @@ public static class DependencyInjection
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
+        services.AddScoped<IGenerateNextMaintenanceOrderService, GenerateNextMaintenanceOrderService>();
 
         return services;
     }
