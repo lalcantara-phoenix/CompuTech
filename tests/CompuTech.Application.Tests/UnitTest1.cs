@@ -1,10 +1,12 @@
-﻿namespace CompuTech.Application.Tests;
+using Xunit;
+
+namespace CompuTech.Application.Tests;
 
 public class UnitTest1
 {
     [Fact]
-    public void Test1()
+    public void Placeholder_Test()
     {
-
+        Assert.True(true);
     }
 }
