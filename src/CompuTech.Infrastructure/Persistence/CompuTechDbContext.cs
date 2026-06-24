@@ -10,6 +10,7 @@ public class CompuTechDbContext(DbContextOptions<CompuTechDbContext> options) : 
     public DbSet<CustomerLocation> CustomerLocations => Set<CustomerLocation>();
     public DbSet<Equipment> Equipments => Set<Equipment>();
     public DbSet<Technician> Technicians => Set<Technician>();
+    public DbSet<InventoryItem> InventoryItems => Set<InventoryItem>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
