@@ -1,0 +1,48 @@
+{
+  "enableAllProjectMcpServers": true,
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "powershell",
+            "command": "$ErrorActionPreference='SilentlyContinue'; $root='C:\\Phoenix Projects\\CompuTech'; $d=[Console]::In.ReadToEnd()|ConvertFrom-Json; $f=$d.tool_input.file_path; if($f -match '\\.cs$' -and (Test-Path \"$root\\CompuTech.sln\")){dotnet build \"$root\\CompuTech.sln\" --no-restore -v quiet 2>&1|Where-Object{$_ -match 'error|Error|succeeded|FAILED'}}",
+            "statusMessage": "Compilando proyecto...",
+            "async": true
+          },
+          {
+            "type": "command",
+            "shell": "powershell",
+            "command": "$ErrorActionPreference='SilentlyContinue'; $root='C:\\Phoenix Projects\\CompuTech'; $d=[Console]::In.ReadToEnd()|ConvertFrom-Json; $f=$d.tool_input.file_path; if($f -match 'CompuTech\\.(Domain|Application|Infrastructure|API)'){$date=Get-Date -Format 'yyyy-MM-dd HH:mm'; Add-Content \"$root\\docs\\BITACORA.md\" \"`n- [$date] Modificado: $f\" -Encoding utf8}",
+            "async": true
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "powershell",
+            "command": "$ErrorActionPreference='SilentlyContinue'; $root='C:\\Phoenix Projects\\CompuTech'; $d=[Console]::In.ReadToEnd()|ConvertFrom-Json; $cmd=$d.tool_input.command; if($cmd -match 'dotnet ef'){$date=Get-Date -Format 'yyyy-MM-dd HH:mm:ss'; $p=\"$root\\docs\\04-migraciones\\ef-log.txt\"; if(-not(Test-Path $p)){New-Item -Force -ItemType File $p|Out-Null}; Add-Content $p \"[$date] $cmd\" -Encoding utf8}",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "powershell",
+            "command": "$ErrorActionPreference='SilentlyContinue'; $root='C:\\Phoenix Projects\\CompuTech'; $date=Get-Date -Format 'yyyy-MM-dd HH:mm'; $cut=(Get-Date).AddHours(-8); $ff=Get-ChildItem $root -Recurse -File|Where-Object{$_.LastWriteTime -gt $cut -and $_.Extension -match '\\.(cs|json|md)$' -and $_.FullName -notmatch 'obj|bin|\\.claude'}; if($ff){$count=$ff.Count; Add-Content \"$root\\docs\\BITACORA.md\" \"`n## Fin de sesión — $date ($count archivos modificados)\" -Encoding utf8; $ff|ForEach-Object{Add-Content \"$root\\docs\\BITACORA.md\" \"- $($_.FullName)\" -Encoding utf8}}",
+            "async": true
+          }
+        ]
+      }
+    ]
+  }
+}
