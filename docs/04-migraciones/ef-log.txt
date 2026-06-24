@@ -1,0 +1,5 @@
+﻿[2026-06-23 23:38:07] cd "c:/Phoenix Projects/CompuTech" && dotnet ef migrations add AddCustomerAndLocation --project src/CompuTech.Infrastructure --startup-project src/CompuTech.API 2>&1
+[2026-06-24 05:32:27] cd "C:\Phoenix Projects\CompuTech" && dotnet ef migrations add AddEquipment --project src/CompuTech.Infrastructure/CompuTech.Infrastructure.csproj --startup-project src/CompuTech.API/CompuTech.API.csproj 2>&1
+[2026-06-24 05:40:57] cd "c:\Phoenix Projects\CompuTech" && dotnet ef migrations add AddTechnician --project src/CompuTech.Infrastructure/CompuTech.Infrastructure.csproj --startup-project src/CompuTech.API/CompuTech.API.csproj 2>&1
+[2026-06-24 05:51:46] cd "C:\Phoenix Projects\CompuTech" && dotnet ef migrations add AddInventoryItem --project src/CompuTech.Infrastructure/CompuTech.Infrastructure.csproj --startup-project src/CompuTech.API/CompuTech.API.csproj 2>&1
+[2026-06-24 06:11:00] cd "C:\Phoenix Projects\CompuTech" && dotnet ef migrations add AddServiceOrders --project src/CompuTech.Infrastructure --startup-project src/CompuTech.API 2>&1
