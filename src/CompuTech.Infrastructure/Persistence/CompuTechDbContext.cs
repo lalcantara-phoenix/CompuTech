@@ -11,6 +11,8 @@ public class CompuTechDbContext(DbContextOptions<CompuTechDbContext> options) : 
     public DbSet<Equipment> Equipments => Set<Equipment>();
     public DbSet<Technician> Technicians => Set<Technician>();
     public DbSet<InventoryItem> InventoryItems => Set<InventoryItem>();
+    public DbSet<ServiceOrder> ServiceOrders => Set<ServiceOrder>();
+    public DbSet<ServiceOrderItem> ServiceOrderItems => Set<ServiceOrderItem>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
