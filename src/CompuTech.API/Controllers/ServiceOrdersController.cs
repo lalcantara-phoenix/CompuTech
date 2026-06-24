@@ -80,7 +80,7 @@ public class ServiceOrdersController(IMediator mediator) : ControllerBase
     /// <param name="id">Service order identifier.</param>
     /// <response code="200">Service order found and returned.</response>
     /// <response code="404">No service order with the given ID exists.</response>
-    [HttpGet("{id:int}", Name = nameof(GetById))]
+    [HttpGet("{id:int}", Name = "GetServiceOrderById")]
     [ProducesResponseType(typeof(ServiceOrderDetailDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(int id, CancellationToken ct)

@@ -43,7 +43,7 @@ public class CustomersController(IMediator mediator) : ControllerBase
     /// <param name="id">Customer identifier.</param>
     /// <response code="200">Customer found and returned.</response>
     /// <response code="404">No customer with the given ID exists.</response>
-    [HttpGet("{id:int}", Name = nameof(GetById))]
+    [HttpGet("{id:int}", Name = "GetCustomerById")]
     [ProducesResponseType(typeof(CustomerDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(int id, CancellationToken ct)
