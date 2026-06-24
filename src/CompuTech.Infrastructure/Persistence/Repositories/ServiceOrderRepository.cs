@@ -16,12 +16,12 @@ public class ServiceOrderRepository : IServiceOrderRepository
 
     public async Task<ServiceOrder?> GetByIdAsync(int id, CancellationToken ct = default)
         => await _context.ServiceOrders
-            .Include("_items")
+            .Include(x => x.Items)
             .FirstOrDefaultAsync(x => x.Id == id, ct);
 
     public async Task<ServiceOrder?> GetByNumberAsync(string orderNumber, CancellationToken ct = default)
         => await _context.ServiceOrders
-            .Include("_items")
+            .Include(x => x.Items)
             .FirstOrDefaultAsync(x => x.OrderNumber == orderNumber, ct);
 
     public async Task<IReadOnlyList<ServiceOrder>> GetByEquipmentIdAsync(int equipmentId, CancellationToken ct = default)
