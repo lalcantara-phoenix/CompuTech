@@ -13,6 +13,7 @@ public class CompuTechDbContext(DbContextOptions<CompuTechDbContext> options) : 
     public DbSet<InventoryItem> InventoryItems => Set<InventoryItem>();
     public DbSet<ServiceOrder> ServiceOrders => Set<ServiceOrder>();
     public DbSet<ServiceOrderItem> ServiceOrderItems => Set<ServiceOrderItem>();
+    public DbSet<MaintenanceSchedule> MaintenanceSchedules => Set<MaintenanceSchedule>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
