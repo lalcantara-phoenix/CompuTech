@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/CompuTech.API/CompuTech.API.csproj" />
+    <Project Path="src/CompuTech.Application/CompuTech.Application.csproj" />
+    <Project Path="src/CompuTech.Domain/CompuTech.Domain.csproj" />
+    <Project Path="src/CompuTech.Infrastructure/CompuTech.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/CompuTech.Application.Tests/CompuTech.Application.Tests.csproj" />
+  </Folder>
+</Solution>

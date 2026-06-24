@@ -124,3 +124,75 @@ Setup → Customers → Equipment → Technicians → Inventory → ServiceOrder
 - C:\Phoenix Projects\CompuTech\docs\README.md
 - C:\Phoenix Projects\CompuTech\docs\01-especificacion\especificacion.md
 - C:\Phoenix Projects\CompuTech\docs\02-arquitectura\arquitectura.md
+
+- [2026-06-23 21:47] Modificado: c:\Phoenix Projects\CompuTech\src\CompuTech.Application\Common\Behaviors\ValidationBehavior.cs
+
+## Fin de sesión — 2026-06-23 21:47 (15 archivos modificados)
+- C:\Phoenix Projects\CompuTech\.mcp.json
+- C:\Phoenix Projects\CompuTech\CompuTech-ProjectSpec.md
+- C:\Phoenix Projects\CompuTech\README.md
+- C:\Phoenix Projects\CompuTech\.github\PULL_REQUEST_TEMPLATE.md
+- C:\Phoenix Projects\CompuTech\docs\BITACORA.md
+- C:\Phoenix Projects\CompuTech\docs\GITFLOW.md
+- C:\Phoenix Projects\CompuTech\docs\README.md
+- C:\Phoenix Projects\CompuTech\docs\01-especificacion\especificacion.md
+- C:\Phoenix Projects\CompuTech\docs\02-arquitectura\arquitectura.md
+- C:\Phoenix Projects\CompuTech\src\CompuTech.API\appsettings.Development.json
+- C:\Phoenix Projects\CompuTech\src\CompuTech.API\appsettings.json
+- C:\Phoenix Projects\CompuTech\src\CompuTech.API\Program.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.API\Properties\launchSettings.json
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Application\Common\Behaviors\ValidationBehavior.cs
+- C:\Phoenix Projects\CompuTech\tests\CompuTech.Application.Tests\UnitTest1.cs
+
+## Fin de sesión — 2026-06-23 22:02 (15 archivos modificados)
+- C:\Phoenix Projects\CompuTech\.mcp.json
+- C:\Phoenix Projects\CompuTech\CompuTech-ProjectSpec.md
+- C:\Phoenix Projects\CompuTech\README.md
+- C:\Phoenix Projects\CompuTech\.github\PULL_REQUEST_TEMPLATE.md
+- C:\Phoenix Projects\CompuTech\docs\BITACORA.md
+- C:\Phoenix Projects\CompuTech\docs\GITFLOW.md
+- C:\Phoenix Projects\CompuTech\docs\README.md
+- C:\Phoenix Projects\CompuTech\docs\01-especificacion\especificacion.md
+- C:\Phoenix Projects\CompuTech\docs\02-arquitectura\arquitectura.md
+- C:\Phoenix Projects\CompuTech\src\CompuTech.API\appsettings.Development.json
+- C:\Phoenix Projects\CompuTech\src\CompuTech.API\appsettings.json
+- C:\Phoenix Projects\CompuTech\src\CompuTech.API\Program.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.API\Properties\launchSettings.json
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Application\Common\Behaviors\ValidationBehavior.cs
+- C:\Phoenix Projects\CompuTech\tests\CompuTech.Application.Tests\UnitTest1.cs
+
+- [2026-06-23 22:14] Modificado: c:\Phoenix Projects\CompuTech\src\CompuTech.Application\Common\Behaviors\ValidationBehavior.cs
+
+- [2026-06-23 22:14] Modificado: c:\Phoenix Projects\CompuTech\src\CompuTech.Application\DependencyInjection.cs
+
+- [2026-06-23 22:14] Modificado: c:\Phoenix Projects\CompuTech\src\CompuTech.Infrastructure\Persistence\CompuTechDbContext.cs
+
+- [2026-06-23 22:14] Modificado: c:\Phoenix Projects\CompuTech\src\CompuTech.Infrastructure\DependencyInjection.cs
+
+- [2026-06-23 22:15] Modificado: c:\Phoenix Projects\CompuTech\src\CompuTech.API\Program.cs
+
+- [2026-06-23 22:15] Modificado: c:\Phoenix Projects\CompuTech\src\CompuTech.API\appsettings.json
+
+- [2026-06-23 22:15] Modificado: c:\Phoenix Projects\CompuTech\src\CompuTech.API\CompuTech.API.csproj
+
+- [2026-06-23 22:17] Modificado: c:\Phoenix Projects\CompuTech\src\CompuTech.API\Program.cs
+
+## Fin de sesión — 2026-06-23 22:18 (18 archivos modificados)
+- C:\Phoenix Projects\CompuTech\.mcp.json
+- C:\Phoenix Projects\CompuTech\CompuTech-ProjectSpec.md
+- C:\Phoenix Projects\CompuTech\README.md
+- C:\Phoenix Projects\CompuTech\.github\PULL_REQUEST_TEMPLATE.md
+- C:\Phoenix Projects\CompuTech\docs\BITACORA.md
+- C:\Phoenix Projects\CompuTech\docs\GITFLOW.md
+- C:\Phoenix Projects\CompuTech\docs\README.md
+- C:\Phoenix Projects\CompuTech\docs\01-especificacion\especificacion.md
+- C:\Phoenix Projects\CompuTech\docs\02-arquitectura\arquitectura.md
+- C:\Phoenix Projects\CompuTech\src\CompuTech.API\appsettings.Development.json
+- C:\Phoenix Projects\CompuTech\src\CompuTech.API\appsettings.json
+- C:\Phoenix Projects\CompuTech\src\CompuTech.API\Program.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.API\Properties\launchSettings.json
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Application\DependencyInjection.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Application\Common\Behaviors\ValidationBehavior.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Infrastructure\DependencyInjection.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Infrastructure\Persistence\CompuTechDbContext.cs
+- C:\Phoenix Projects\CompuTech\tests\CompuTech.Application.Tests\UnitTest1.cs
