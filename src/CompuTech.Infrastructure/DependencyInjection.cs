@@ -1,4 +1,6 @@
+using CompuTech.Domain.Interfaces;
 using CompuTech.Infrastructure.Persistence;
+using CompuTech.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +13,9 @@ public static class DependencyInjection
     {
         services.AddDbContext<CompuTechDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+        services.AddScoped<ICustomerRepository, CustomerRepository>();
+        services.AddScoped<ICustomerLocationRepository, CustomerLocationRepository>();
 
         return services;
     }
