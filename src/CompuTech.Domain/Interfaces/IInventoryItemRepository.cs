@@ -10,6 +10,7 @@ public interface IInventoryItemRepository
     Task<IReadOnlyList<InventoryItem>> GetAllAsync(CancellationToken ct = default);
     Task<IReadOnlyList<InventoryItem>> GetByTypeAsync(InventoryItemType type, CancellationToken ct = default);
     Task<IReadOnlyList<InventoryItem>> GetByCategoryAsync(InventoryCategory category, CancellationToken ct = default);
+    Task<IReadOnlyList<InventoryItem>> GetBelowStockThresholdAsync(int threshold, CancellationToken ct = default);
     Task AddAsync(InventoryItem item, CancellationToken ct = default);
     Task UpdateAsync(InventoryItem item, CancellationToken ct = default);
 }

@@ -76,4 +76,14 @@ public class ServiceOrderRepository : IServiceOrderRepository
         _context.ServiceOrders.Update(order);
         await _context.SaveChangesAsync(ct);
     }
+
+    public async Task<IReadOnlyList<(ServiceOrderStatus Status, int Count)>> GetCountsByStatusAsync(CancellationToken ct = default)
+    {
+        var results = await _context.ServiceOrders
+            .GroupBy(x => x.Status)
+            .Select(g => new { Status = g.Key, Count = g.Count() })
+            .ToListAsync(ct);
+
+        return results.Select(r => (r.Status, r.Count)).ToList();
+    }
 }

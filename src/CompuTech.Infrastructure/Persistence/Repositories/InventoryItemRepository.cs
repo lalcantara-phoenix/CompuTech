@@ -46,6 +46,14 @@ public class InventoryItemRepository : IInventoryItemRepository
             .ToListAsync(ct);
     }
 
+    public async Task<IReadOnlyList<InventoryItem>> GetBelowStockThresholdAsync(int threshold, CancellationToken ct = default)
+    {
+        return await _context.InventoryItems
+            .Where(i => i.IsActive && i.StockQuantity <= threshold)
+            .OrderBy(i => i.StockQuantity)
+            .ToListAsync(ct);
+    }
+
     public async Task AddAsync(InventoryItem item, CancellationToken ct = default)
     {
         _context.InventoryItems.Add(item);

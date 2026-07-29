@@ -1,4 +1,5 @@
 using CompuTech.Domain.Entities;
+using CompuTech.Domain.Enums;
 using CompuTech.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -48,5 +49,23 @@ public class TechnicianRepository : ITechnicianRepository
     {
         _context.Technicians.Update(technician);
         await _context.SaveChangesAsync(ct);
+    }
+
+    public async Task<IReadOnlyList<(int TechnicianId, string FullName, int ActiveOrderCount)>> GetTopByActiveOrdersAsync(int top, CancellationToken ct = default)
+    {
+        var activeStatuses = new[] { ServiceOrderStatus.Planned, ServiceOrderStatus.InProgress };
+
+        var results = await _context.Technicians
+            .Select(t => new
+            {
+                t.Id,
+                t.FullName,
+                ActiveOrderCount = _context.ServiceOrders.Count(o => o.TechnicianId == t.Id && activeStatuses.Contains(o.Status))
+            })
+            .OrderByDescending(t => t.ActiveOrderCount)
+            .Take(top)
+            .ToListAsync(ct);
+
+        return results.Select(r => (r.Id, r.FullName, r.ActiveOrderCount)).ToList();
     }
 }
