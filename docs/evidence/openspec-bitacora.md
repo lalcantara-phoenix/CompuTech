@@ -91,3 +91,170 @@ All artifacts complete!
 4. **El spec generado es testeable:** cada requisito tiene al menos un escenario WHEN/THEN que puede convertirse directamente en un test unitario.
 
 ---
+
+## Sesión 2 — Implementación con `/opsx:apply`
+
+**Fecha:** 2026-07-29  
+**Comando ejecutado:** `/opsx:apply dashboard-kpis`  
+**Punto de partida:** 4/4 artefactos completos, 0/17 tareas implementadas.
+
+---
+
+### Paso 1 — Lectura de instrucciones de implementación
+
+**Comando interno ejecutado por el skill:**
+```bash
+openspec instructions apply --change "dashboard-kpis" --json
+```
+**Resultado relevante:**
+- `state`: ready (todos los artefactos presentes)
+- `progress`: 0/17 tareas completas
+- `contextFiles`: proposal.md, specs/dashboard-kpis/spec.md, design.md, tasks.md
+- `operationGuidance`: tareas por capa, verificar build tras cada grupo
+- `instruction`: implementar en el orden de las capas, marcar `[x]` al completar cada tarea
+
+---
+
+### Paso 2 — Grupo 1: Domain (tareas 1.1–1.4)
+
+**Objetivo:** Agregar los nuevos métodos a las interfaces de repositorio.
+
+| Tarea | Archivo | Cambio |
+|---|---|---|
+| 1.1 | `IServiceOrderRepository.cs` | `Task<IReadOnlyList<(ServiceOrderStatus Status, int Count)>> GetCountsByStatusAsync(...)` |
+| 1.2 | `ITechnicianRepository.cs` | `Task<IReadOnlyList<(int TechnicianId, string FullName, int ActiveOrderCount)>> GetTopByActiveOrdersAsync(int top, ...)` |
+| 1.3 | `IInventoryItemRepository.cs` | `Task<IReadOnlyList<InventoryItem>> GetBelowStockThresholdAsync(int threshold, ...)` |
+| 1.4 | `IMaintenanceScheduleRepository.cs` | Verificado: `GetDueAsync(DateTime referenceDate)` ya cubre "próximos 30 días" pasando `DateTime.UtcNow.AddDays(30)` — no se requirió cambio |
+
+**Estado:** ✅ 4/4 tareas completadas
+
+---
+
+### Paso 3 — Grupo 2: Application (tareas 2.1–2.4)
+
+**Objetivo:** Crear la query, los DTOs y el handler.
+
+| Tarea | Archivo creado | Descripción |
+|---|---|---|
+| 2.1 | `Application/Dashboard/Queries/GetDashboard/GetDashboardQuery.cs` | `public record GetDashboardQuery : IRequest<DashboardDto>` |
+| 2.2 | `Application/Dashboard/DTOs/DashboardDto.cs` | Record principal con las cuatro colecciones |
+| 2.3 | (mismo archivo) | DTOs de soporte: `OrderStatusCountDto`, `TechnicianWorkloadDto`, `LowStockItemDto`, `DueScheduleDto` |
+| 2.4 | `Application/Dashboard/Queries/GetDashboard/GetDashboardQueryHandler.cs` | Handler que inyecta cuatro repositorios |
+
+**Error encontrado y corregido:**  
+El handler usó inicialmente la sintaxis `await (Task1, Task2, Task3, Task4)` para ejecutar los cuatro repositorios en paralelo. C# no soporta `await` sobre una tupla de Tasks (`CS1061: '(Task<...>, ...)' does not contain a definition for 'GetAwaiter'`). Se corrigió usando el patrón `Task.WhenAll`:
+
+```csharp
+// ❌ Inválido en C#
+var (a, b, c, d) = await (repo1.Query(), repo2.Query(), repo3.Query(), repo4.Query());
+
+// ✅ Correcto
+var t1 = repo1.GetCountsByStatusAsync(ct);
+var t2 = repo2.GetTopByActiveOrdersAsync(5, ct);
+var t3 = repo3.GetBelowStockThresholdAsync(5, ct);
+var t4 = repo4.GetDueAsync(DateTime.UtcNow.AddDays(30), ct);
+await Task.WhenAll(t1, t2, t3, t4);
+var statusCounts = await t1;  // retorna inmediatamente (ya completado)
+```
+
+**Segunda corrección:** Las propiedades de `InventoryItem` se llaman `SKU` (mayúsculas) y `StockQuantity` — no `Sku`/`Stock` como se asumió inicialmente. Identificado revisando la entidad de dominio.
+
+**Estado:** ✅ 4/4 tareas completadas — build: 0 errores
+
+---
+
+### Paso 4 — Grupo 3: Infrastructure (tareas 3.1–3.4)
+
+**Objetivo:** Implementar los nuevos métodos de repositorio con EF Core.
+
+| Tarea | Repositorio | Implementación |
+|---|---|---|
+| 3.1 | `ServiceOrderRepository.cs` | `GroupBy(x => x.Status).Select(g => new { Status = g.Key, Count = g.Count() })` |
+| 3.2 | `TechnicianRepository.cs` | Correlated subquery: cuenta `ServiceOrders` con status `Planned` o `InProgress` por técnico, ordena descendente, `Take(top)` |
+| 3.3 | `InventoryItemRepository.cs` | `Where(i => i.IsActive && i.StockQuantity <= threshold).OrderBy(i => i.StockQuantity)` |
+| 3.4 | `MaintenanceScheduleRepository.cs` | Sin cambio — `GetDueAsync` ya implementado y cubre el requerimiento |
+
+**Estado:** ✅ 4/4 tareas completadas — build: 0 errores
+
+---
+
+### Paso 5 — Grupo 4: API (tarea 4.1)
+
+**Objetivo:** Crear el controller con el único endpoint del dashboard.
+
+**Archivo creado:** `src/CompuTech.API/Controllers/DashboardController.cs`
+
+```csharp
+[Route("api/dashboard")]
+[ApiController]
+public class DashboardController(IMediator mediator) : ControllerBase
+{
+    [HttpGet(Name = "GetDashboard")]
+    public async Task<IActionResult> GetDashboard(CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new GetDashboardQuery(), cancellationToken);
+        return Ok(result);
+    }
+}
+```
+
+El nombre de ruta `"GetDashboard"` sigue la convención del proyecto de evitar `nameof(...)` entre controllers.
+
+**Estado:** ✅ 1/1 tarea completada — build: 0 errores
+
+---
+
+### Paso 6 — Grupo 5: Tests (tarea 5.1)
+
+**Objetivo:** Suite de pruebas unitarias para `GetDashboardQueryHandler`.
+
+**Archivo creado:** `tests/CompuTech.Application.Tests/Dashboard/GetDashboardQueryHandlerTests.cs`
+
+9 tests escritos con xUnit + Moq + FluentAssertions:
+
+| # | Nombre del test | Qué verifica |
+|---|---|---|
+| 1 | `Handle_ReturnsAllSections_WhenAllRepositoriesHaveData` | Las 4 secciones del DTO se populan correctamente |
+| 2 | `Handle_ReturnsEmptySections_WhenRepositoriesReturnEmpty` | No lanza excepción con repos vacíos |
+| 3 | `Handle_OrdersByStatus_IncludesAllStatusValues` | `OrdersByStatus` tiene una entrada por cada valor del enum |
+| 4 | `Handle_OrdersByStatus_MapsCountsCorrectly` | Los conteos se asignan al status correcto; ausentes → Count=0 |
+| 5 | `Handle_TopTechnicians_PassesCorrectTopCount` | Llama `GetTopByActiveOrdersAsync(5, ...)` exactamente una vez |
+| 6 | `Handle_LowStockItems_PassesCorrectThreshold` | Llama `GetBelowStockThresholdAsync(5, ...)` exactamente una vez |
+| 7 | `Handle_TopTechnicians_MapsTupleFieldsToDto` | Mapeo correcto de la tupla al DTO |
+| 8 | `Handle_DueMaintenanceSchedules_MapsEntityFieldsToDto` | Mapeo correcto de la entidad al DTO |
+| 9 | `Handle_LowStockItems_MapsEntityFieldsToDto` | `SKU` y `StockQuantity` mapeados correctamente |
+
+**Nota técnica:** Se requirió agregar alias de tipos al inicio del archivo de test para evitar que el compilador resolviera `MaintenanceSchedule` como el namespace `CompuTech.Application.MaintenanceSchedule` en vez de la entidad de dominio — convención documentada en CLAUDE.md.
+
+**Resultado:** `dotnet test` — **53/53 tests pasan** (44 previos + 9 nuevos)
+
+**Estado:** ✅ 1/1 tarea completada
+
+---
+
+### Resumen del apply
+
+| Grupo | Tareas | Estado |
+|---|---|---|
+| 1 — Domain | 1.1, 1.2, 1.3, 1.4 | ✅ Completo |
+| 2 — Application | 2.1, 2.2, 2.3, 2.4 | ✅ Completo |
+| 3 — Infrastructure | 3.1, 3.2, 3.3, 3.4 | ✅ Completo |
+| 4 — API | 4.1 | ✅ Completo |
+| 5 — Tests | 5.1 | ✅ Completo |
+| **Total** | **17/17** | **✅ Implementación completa** |
+
+**Build final:** `dotnet build` — 0 errores  
+**Tests finales:** `dotnet test` — 53/53 pasan  
+**Commit:** `feat(dashboard): implementar endpoint GET /api/dashboard con KPIs`  
+**PR:** `feature/dashboard-kpis → testing` — PR #93
+
+---
+
+### Observaciones sobre el flujo apply
+
+1. **El skill mantuvo el contexto del spec durante toda la implementación** — las decisiones de diseño (umbral de stock = 5, top técnicos = 5, ventana de 30 días) se tomaron del `design.md` generado en la sesión 1, sin necesidad de repetirlas.
+2. **El orden por capas evitó bloqueos** — implementar Domain primero permitió que Application compilara, y Application permitió que Infrastructure implementara sin errores de tipo.
+3. **Dos errores de build encontrados durante el apply** sirven como evidencia de que el framework no es un generador automático sin revisión — requiere supervisión técnica para corregir incompatibilidades de lenguaje y convenciones de entidad.
+4. **La tarea 1.4 fue resuelta sin código nuevo** — el skill leyó la implementación existente y determinó que `GetDueAsync(DateTime.UtcNow.AddDays(30))` ya cubre el requisito, evitando código duplicado.
+
+---
