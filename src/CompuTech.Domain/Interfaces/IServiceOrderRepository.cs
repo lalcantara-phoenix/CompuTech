@@ -11,6 +11,7 @@ public interface IServiceOrderRepository
     Task<IReadOnlyList<ServiceOrder>> GetByTechnicianIdAsync(int technicianId, CancellationToken ct = default);
     Task<IReadOnlyList<ServiceOrder>> GetByStatusAsync(ServiceOrderStatus status, CancellationToken ct = default);
     Task<IReadOnlyList<ServiceOrder>> GetAllAsync(CancellationToken ct = default);
+    Task<IReadOnlyList<(ServiceOrderStatus Status, int Count)>> GetCountsByStatusAsync(CancellationToken ct = default);
     Task<int> GetNextSequenceAsync(int year, CancellationToken ct = default);
     Task<int> AddAsync(ServiceOrder order, CancellationToken ct = default);
     Task UpdateAsync(ServiceOrder order, CancellationToken ct = default);

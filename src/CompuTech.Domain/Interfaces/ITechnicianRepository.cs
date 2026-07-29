@@ -8,6 +8,7 @@ public interface ITechnicianRepository
     Task<Technician?> GetByEmailAsync(string email, CancellationToken ct = default);
     Task<IReadOnlyList<Technician>> GetAllAsync(CancellationToken ct = default);
     Task<IReadOnlyList<Technician>> GetActiveAsync(CancellationToken ct = default);
+    Task<IReadOnlyList<(int TechnicianId, string FullName, int ActiveOrderCount)>> GetTopByActiveOrdersAsync(int top, CancellationToken ct = default);
     Task AddAsync(Technician technician, CancellationToken ct = default);
     Task UpdateAsync(Technician technician, CancellationToken ct = default);
 }
