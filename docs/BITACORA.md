@@ -3295,3 +3295,50 @@ Setup → Customers → Equipment → Technicians → Inventory → ServiceOrder
 - [2026-07-29 10:12] Modificado: C:\Phoenix Projects\CompuTech\tests\CompuTech.Application.Tests\Dashboard\GetDashboardQueryHandlerTests.cs
 
 - [2026-07-29 10:12] Modificado: C:\Phoenix Projects\CompuTech\tests\CompuTech.Application.Tests\Dashboard\GetDashboardQueryHandlerTests.cs
+
+## Fin de sesión — 2026-07-29 10:16 (13 archivos modificados)
+- C:\Phoenix Projects\CompuTech\docs\BITACORA.md
+- C:\Phoenix Projects\CompuTech\openspec\changes\dashboard-kpis\tasks.md
+- C:\Phoenix Projects\CompuTech\src\CompuTech.API\Controllers\DashboardController.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Application\Dashboard\DTOs\DashboardDto.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Application\Dashboard\Queries\GetDashboard\GetDashboardQuery.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Application\Dashboard\Queries\GetDashboard\GetDashboardQueryHandler.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Domain\Interfaces\IInventoryItemRepository.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Domain\Interfaces\IServiceOrderRepository.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Domain\Interfaces\ITechnicianRepository.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Infrastructure\Persistence\Repositories\InventoryItemRepository.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Infrastructure\Persistence\Repositories\ServiceOrderRepository.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Infrastructure\Persistence\Repositories\TechnicianRepository.cs
+- C:\Phoenix Projects\CompuTech\tests\CompuTech.Application.Tests\Dashboard\GetDashboardQueryHandlerTests.cs
+
+## Fin de sesión — 2026-07-29 10:24 (14 archivos modificados)
+- C:\Phoenix Projects\CompuTech\docs\BITACORA.md
+- C:\Phoenix Projects\CompuTech\docs\evidence\openspec-bitacora.md
+- C:\Phoenix Projects\CompuTech\openspec\changes\dashboard-kpis\tasks.md
+- C:\Phoenix Projects\CompuTech\src\CompuTech.API\Controllers\DashboardController.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Application\Dashboard\DTOs\DashboardDto.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Application\Dashboard\Queries\GetDashboard\GetDashboardQuery.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Application\Dashboard\Queries\GetDashboard\GetDashboardQueryHandler.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Domain\Interfaces\IInventoryItemRepository.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Domain\Interfaces\IServiceOrderRepository.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Domain\Interfaces\ITechnicianRepository.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Infrastructure\Persistence\Repositories\InventoryItemRepository.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Infrastructure\Persistence\Repositories\ServiceOrderRepository.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Infrastructure\Persistence\Repositories\TechnicianRepository.cs
+- C:\Phoenix Projects\CompuTech\tests\CompuTech.Application.Tests\Dashboard\GetDashboardQueryHandlerTests.cs
+
+## Fin de sesión — 2026-07-29 10:49 (14 archivos modificados)
+- C:\Phoenix Projects\CompuTech\docs\BITACORA.md
+- C:\Phoenix Projects\CompuTech\docs\evidence\openspec-bitacora.md
+- C:\Phoenix Projects\CompuTech\openspec\changes\dashboard-kpis\tasks.md
+- C:\Phoenix Projects\CompuTech\src\CompuTech.API\Controllers\DashboardController.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Application\Dashboard\DTOs\DashboardDto.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Application\Dashboard\Queries\GetDashboard\GetDashboardQuery.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Application\Dashboard\Queries\GetDashboard\GetDashboardQueryHandler.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Domain\Interfaces\IInventoryItemRepository.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Domain\Interfaces\IServiceOrderRepository.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Domain\Interfaces\ITechnicianRepository.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Infrastructure\Persistence\Repositories\InventoryItemRepository.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Infrastructure\Persistence\Repositories\ServiceOrderRepository.cs
+- C:\Phoenix Projects\CompuTech\src\CompuTech.Infrastructure\Persistence\Repositories\TechnicianRepository.cs
+- C:\Phoenix Projects\CompuTech\tests\CompuTech.Application.Tests\Dashboard\GetDashboardQueryHandlerTests.cs

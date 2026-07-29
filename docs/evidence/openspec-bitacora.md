@@ -258,3 +258,114 @@ El nombre de ruta `"GetDashboard"` sigue la convención del proyecto de evitar `
 4. **La tarea 1.4 fue resuelta sin código nuevo** — el skill leyó la implementación existente y determinó que `GetDueAsync(DateTime.UtcNow.AddDays(30))` ya cubre el requisito, evitando código duplicado.
 
 ---
+
+## Sesión 3 — Cierre con `/opsx:archive`
+
+**Fecha:** 2026-07-29  
+**Comando ejecutado:** `/opsx:archive dashboard-kpis`  
+**Punto de partida:** 17/17 tareas implementadas, PR #93 creado.
+
+---
+
+### Paso 1 — Verificación de completitud
+
+**Comandos ejecutados:**
+```bash
+openspec instructions archive --change "dashboard-kpis" --json
+openspec status --change "dashboard-kpis" --json
+```
+
+**Resultado:**
+- `isComplete: true`
+- 4/4 artefactos con status `done`
+- 17/17 tareas con `[x]`
+- Sin advertencias
+
+**Guidance de archive aplicado:** resumir reglas de negocio implementadas y desviaciones del proposal.
+
+---
+
+### Paso 2 — Evaluación del delta spec
+
+El delta spec `openspec/changes/dashboard-kpis/specs/dashboard-kpis/spec.md` existe pero **no había spec principal** en `openspec/specs/dashboard-kpis/spec.md` — capability nueva, nunca archivada antes.
+
+**Operación requerida:** crear el spec principal con los 5 requisitos y 12 escenarios de la capability `dashboard-kpis`.
+
+---
+
+### Paso 3 — Sync del spec
+
+**Operación:** antes de escribir el spec principal se obtuvieron las reglas del artefacto `specs` vía:
+```bash
+openspec instructions specs --change "dashboard-kpis" --json
+```
+
+Las reglas confirmaron el formato correcto para capabilities nuevas: incluir `## Purpose`, convertir `## ADDED Requirements` en `## Requirements` canónico (sin prefijo).
+
+**Archivo creado:** `openspec/specs/dashboard-kpis/spec.md`
+
+| Elemento | Resultado |
+|---|---|
+| `## Purpose` | Copiado del delta spec |
+| Requisitos | 5 requisitos, cabecera `ADDED` eliminada |
+| Escenarios | 12 escenarios WHEN/THEN |
+| Verificación | Delta ↔ main: todos los requisitos y escenarios presentes ✅ |
+
+---
+
+### Paso 4 — Archive
+
+```bash
+mv openspec/changes/dashboard-kpis \
+   openspec/changes/archive/2026-07-29-dashboard-kpis
+```
+
+El directorio del change fue movido al archivo histórico con prefijo de fecha.
+
+---
+
+### Resumen del archive
+
+| Elemento | Valor |
+|---|---|
+| Change | `dashboard-kpis` |
+| Schema | `spec-driven` |
+| Archivado en | `openspec/changes/archive/2026-07-29-dashboard-kpis/` |
+| Spec principal | `openspec/specs/dashboard-kpis/spec.md` ✓ Creado y sincronizado |
+| Artefactos | 4/4 completos |
+| Tareas | 17/17 completas |
+
+---
+
+### Reglas de negocio implementadas (por guidance del archive)
+
+| Regla | Implementación |
+|---|---|
+| Dashboard agrega 4 fuentes en paralelo | `Task.WhenAll` en el handler — sin bloqueo secuencial |
+| Conteo por status incluye todos los valores del enum | Handler itera `Enum.GetValues<ServiceOrderStatus>()` y asigna 0 a los ausentes |
+| Umbral de stock = 5 unidades | Constante `LowStockThreshold = 5` en el handler (no hardcoded en la query) |
+| Top técnicos = 5 | Constante `TopTechniciansCount = 5` |
+| Ventana de mantenimiento = 30 días | Constante `DueWithinDays = 30`; reutiliza `GetDueAsync` existente |
+
+**Desviaciones del proposal:** ninguna. El endpoint implementado cubre exactamente los cuatro módulos definidos en el proposal (`OrdersByStatus`, `TopTechnicians`, `LowStockItems`, `DueMaintenanceSchedules`) con los valores de umbral y ventana especificados en `design.md`.
+
+---
+
+### Flujo OpenSpec completo — Dashboard KPIs
+
+```
+propose  →  apply  →  archive
+[2026-07-28]  [2026-07-29]  [2026-07-29]
+4 artefactos  17 tareas     spec canónico
+generados     implementadas en openspec/specs/
+```
+
+---
+
+### Observaciones sobre el flujo archive
+
+1. **El sync verifica antes de mover** — el skill obtiene las reglas del artefacto `specs` antes de escribir el archivo principal, garantizando que el formato sea correcto. Si el CLI no responde, el archive se detiene sin dejar el repositorio en estado inconsistente.
+2. **El spec principal es el registro permanente** — una vez archivado, `openspec/specs/dashboard-kpis/spec.md` es el contrato de comportamiento que cualquier futuro change puede referenciar o modificar con `MODIFIED Requirements`.
+3. **El archive histórico queda en `openspec/changes/archive/`** — con prefijo de fecha, permite reconstruir el historial completo de decisiones (proposal + design + tasks) de cada feature entregada.
+
+---
