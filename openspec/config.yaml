@@ -1,0 +1,46 @@
+schema: spec-driven
+
+context: |
+  Project: CompuTech API — Web API REST for technical service order management.
+  Tech stack: .NET 10, ASP.NET Core, Clean Architecture + CQRS (MediatR 14), FluentValidation 12, EF Core 10, SQL Server LocalDB.
+  Architecture layers: Domain → Application → Infrastructure → API. Dependency direction: API → Application → Domain; Infrastructure → Application.
+  Solution file: CompuTech.slnx
+  Modules: Customers, Equipment, Technicians, Inventory, ServiceOrders, MaintenanceSchedule.
+  Conventions:
+    - Every use case lives in Application/<Module>/Commands/<Name>/ or Queries/<Name>/
+    - Commands returning an ID implement IRequest<int>; state-change commands implement IRequest
+    - Handlers throw KeyNotFoundException (not found) or InvalidOperationException (business rule violation)
+    - Domain entities use factory methods (Entity.Create(...)), private constructors, private set properties
+    - Validators use MustAsync for DB checks — always call ValidateAsync, never Validate()
+    - EF Core navigation includes use lambda form: .Include(x => x.Items), not string form
+    - Enums stored as int via .HasConversion<int>() in all configurations
+    - Route names must be globally unique across all controllers
+  Git workflow: feature/* → testing → main (squash merge, two-phase GitFlow)
+  Tests: xUnit + Moq + FluentAssertions, 44 unit tests, no in-memory DB (mocked repositories)
+  Key business rules:
+    #1 One active MaintenanceSchedule per equipment
+    #5 SubType must be valid for Type (Repair↔Hardware/Software/Diagnostic; Maintenance↔Preventive/OnDemand)
+    #6 Subtotal = Quantity × UnitPrice; Part items decrement stock
+    #8 Completing a Preventive order auto-generates the next maintenance order
+
+rules:
+  proposal:
+    - Write proposals in Spanish
+    - Always list which existing modules or entities are affected
+    - Include a Non-goals section to keep scope clear
+  tasks:
+    - Break tasks by architecture layer (Domain, Application, Infrastructure, API, Tests)
+    - Each task should correspond to one file or one logical unit of work
+    - Always include a migration task when the domain model changes
+    - Always include a unit tests task
+
+operations:
+  apply:
+    guidance:
+      - Follow Clean Architecture conventions defined in CLAUDE.md
+      - Run dotnet build after each layer before moving to the next
+      - Use the submit-feature-pr skill to deliver each completed issue to testing
+  archive:
+    guidance:
+      - Summarize which business rules were implemented
+      - Note any deviations from the original proposal and why
